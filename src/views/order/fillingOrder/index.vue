@@ -282,7 +282,7 @@ export default {
         },
         // 退款按钮
         refundMoney(row){
-            this.$alert('你确定要执行退货操作？', '退款', {
+            this.$alert('你确定要执行退款操作？', '退款', {
                 confirmButtonText: '确定',
                 callback: action => {
                     if(action == 'confirm'){
