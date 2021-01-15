@@ -216,7 +216,7 @@ export default {
                 { label: '砍价成功', value: '2' },
                 { label: '已领取', value: '3' },
                 { label: '砍价失败', value: '4' }
-            ],
+            ], 
             list: [],
             listLoading: false,
             total: 0,

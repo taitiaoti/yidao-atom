@@ -497,7 +497,8 @@
                   startTime: this.searchObj.startTime,
                   endTime: this.searchObj.endTime,
                   //订单类型
-                  orderType:this.searchObj.orderType
+                  orderType:this.searchObj.orderType,
+                  storeName: this.searchObj.storeName == ''? null : this.searchObj.storeName,
                 };
                 this.$notify({
                     title: '导出中',

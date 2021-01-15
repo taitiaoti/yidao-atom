@@ -37,9 +37,9 @@
                             </el-table-column>
                             <el-table-column label="操作">
                                 <template slot-scope="scope">
-                                    <el-button type="success" @click="updateAddress(scope.row)" size="mini">编辑</el-button>
-                                    <el-button type="danger" @click="deleteAddress(scope.row)" size="mini">删除</el-button>
-                                    <el-button @click="setDefaut(scope.row)" v-if="!scope.row.isDefault" size="mini">设置为默认地址</el-button>
+                                    <el-button type="success" @click.stop="updateAddress(scope.row)" size="mini">编辑</el-button>
+                                    <el-button type="danger" @click.stop="deleteAddress(scope.row)" size="mini">删除</el-button>
+                                    <el-button @click.stop="setDefaut(scope.row)" v-if="!scope.row.isDefault" size="mini">设置为默认地址</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -263,6 +263,7 @@
                         provinceId: value[0]
                     }
                     const res = await getCityByProvinceId(postData);
+                    console.log(res,'1')
                     this.citys = filterAddressData(res.data.result);
                     this.options.forEach((item, index) => {
                         if(item.value == value[0] && !item.cities.length){
@@ -275,6 +276,7 @@
                         cityId: value[1]
                     }
                     const res = await getAreaByCityId(postData);
+                    console.log(res,'2')
                     this.areas = filterAddressData(res.data.result);
                     this.options.forEach((item, index) => {
                         if(item.value == value[0]){
@@ -292,6 +294,7 @@
                         countyId: value[2]
                     }
                     const res = await getTownByAreaId(postData);
+                    console.log(res,'3')
                     this.townList = filterAddressData(res.data.result, true);
                     if(!res.data.result){
                         // this.getAddressCode(value)
@@ -316,10 +319,12 @@
                         countyId: value[2]
                     }
                     const res = await getTownByAreaId(postData);
+                    console.log(res,'4')
                     this.townList = filterAddressData(res.data.result, true);
                     this.townList.forEach((item, index) => {
                         if(item.value == value[3]){
                             this.addressData['town'] = item.label;
+                            this.addressData['townCode'] = item.value;
                         }
                     });
                 }
@@ -361,6 +366,7 @@
             },
             async sumbmitAddress(){
                 this.dialogFormVisible = !this.dialogFormVisible;
+                console.log(this.addressKeyList,'this.addressKeyList')
                 let postData = {
                     name: this.addressData.name,
                     phone: this.addressData.phone,
@@ -368,6 +374,7 @@
                     city: this.addressKeyList[1],
                     area: this.addressKeyList[2],
                     town: !!this.addressKeyList[3] ? this.addressKeyList[3] : '',
+                    townCode: this.addressData.townCode ? this.addressData.townCode : null,
                     name: this.addressData.name,
                     address: this.addressData.address,
                     isDefault: !!this.addressData.isDefault ? 1 : 0,
